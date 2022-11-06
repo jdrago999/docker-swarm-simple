@@ -51,3 +51,11 @@ docker service logs hello_backend
 curl localhost
 curl localhost/api
 ```
+
+## REMOVING THE STACK
+
+When you want to remove/uninstall the stack, do this:
+
+```bash
+docker stack rm hello
+```
