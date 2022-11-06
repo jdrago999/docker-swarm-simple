@@ -1,0 +1,36 @@
+
+version: "3.0"
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/sites-enabled:/etc/nginx/conf.d
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+
+  backend:
+    image: erikap/ruby-sinatra
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 80
+
+  redis:
+    image: redis
+    ports:
+      - 6379
+
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306
+    environment:
+      - MYSQL_DATABASE=virull_development
+      - MYSQL_USER=virull
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_ROOT_PASSWORD=changeme
+    volumes:
+      - ./mysql-initdb.d:/docker-entrypoint-initdb.d
