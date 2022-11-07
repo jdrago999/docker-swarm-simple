@@ -1,5 +1,5 @@
 
 require 'sinatra'
 get '/api' do
-  'HELLO WORLD!!!'
+  'version 1.0.2'
 end

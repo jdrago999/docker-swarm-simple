@@ -4,6 +4,10 @@ version: "3.0"
 services:
   nginx:
     image: nginx
+    labels:
+      kompose.service.type: LoadBalancer
+    restart: on-failure
+    container_name: nginx
     volumes:
       - ./nginx/sites-enabled:/etc/nginx/conf.d
     depends_on:
@@ -12,7 +16,9 @@ services:
       - 80:80
 
   backend:
-    image: erikap/ruby-sinatra
+    image: swarm1/backend:v1.0.2
+    restart: on-failure
+    container_name: backend
     volumes:
       - ./backend:/usr/src/app
     ports:
@@ -20,11 +26,15 @@ services:
 
   redis:
     image: redis
+    restart: on-failure
+    container_name: redis
     ports:
       - 6379
 
   mysql:
     image: mysql:8
+    restart: on-failure
+    container_name: mysql
     ports:
       - 3306
     environment:
